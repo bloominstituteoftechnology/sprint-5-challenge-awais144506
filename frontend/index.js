@@ -33,7 +33,7 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
 
   const cardsContainer = document.querySelector('.cards')
   const info = document.querySelector('.info')
-  info.textContent = 'No learner is selected'
+  info.textContent = 'g'
 
 
   // 👇 ==================== TASK 3 START ==================== 👇

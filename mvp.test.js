@@ -31,7 +31,7 @@ async function firstCardRender() {
   expect(bob).toBeInTheDocument()
 }
 
-describe('Sprint Challenge 5', () => {
+describe.only('Sprint Challenge 5', () => {
   describe('Sprint setup', () => {
     test('👉 [1] Version of challenge is valid', () => {
       const versions = ['1.0.0']
@@ -44,7 +44,7 @@ describe('Sprint Challenge 5', () => {
       expect(window.aidgfuioghausfdu).not.toBeDefined()
     })
   })
-  describe('Initial HTML', () => {
+  describe.only('Initial HTML', () => {
     test('👉 [4] <h1> text is "Sprint 5 Challenge Submission"', () => {
       screen.getByText('Sprint 5 Challenge Submission')
     })
@@ -55,7 +55,7 @@ describe('Sprint Challenge 5', () => {
       screen.getByText('© BLOOM INSTITUTE OF TECHNOLOGY', queryOptions)
     })
   })
-  describe('Successful Axios requests and DOM manipulation', () => {
+  describe.only('Successful Axios requests and DOM manipulation', () => {
     test('👉 [7] <p class="info"> text is "No learner is selected" after rendering cards', async () => {
       await firstCardRender()
       screen.getByText('No learner is selected')
@@ -122,7 +122,7 @@ describe('Sprint Challenge 5', () => {
       })
     })
   })
-  describe('Card Interactivity', () => {
+  describe.only('Card Interactivity', () => {
     test('👉 [16] <div class="card selected"> clicking on a card toggles a class of "selected" on it', async () => {
       await firstCardRender()
       const card = document.querySelector('.card:nth-child(1)')
