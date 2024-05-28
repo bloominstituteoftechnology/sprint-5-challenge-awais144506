@@ -1,3 +1,5 @@
+
+
 async function sprintChallenge5() { // Note the async keyword so you can use `await` inside sprintChallenge5
   // 👇 WORK ONLY BELOW THIS LINE 👇
   // 👇 WORK ONLY BELOW THIS LINE 👇
@@ -9,9 +11,37 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   // ❗ Use the variables `mentors` and `learners` to store the data.
   // ❗ Use the await keyword when using axios.
 
+ 
   let mentors = [] // fix this
   let learners = [] // fix this
-
+  async function fetchMentorList(url)
+  {
+   try{
+     const res = await axios.get(url)
+    mentors.push(res.data)
+    
+   }
+   catch(err)
+   {
+     console.log("You got the error",err)
+   }
+  }
+  fetchMentorList("http://localhost:3003/api/mentors")
+  async function fetchLearnerList(url)
+  {
+   try{
+     const res = await axios.get(url)
+    learners.push(res.data)
+    
+   }
+   catch(err)
+   {
+     console.log("You got the error",err)
+   }
+  }
+  fetchLearnerList("http://localhost:3003/api/learners")
+  console.log(mentors)
+  console.log(learners)
   // 👆 ==================== TASK 1 END ====================== 👆
 
   // 👇 ==================== TASK 2 START ==================== 👇
@@ -33,7 +63,7 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
 
   const cardsContainer = document.querySelector('.cards')
   const info = document.querySelector('.info')
-  info.textContent = 'g'
+  info.textContent = 'No learner is selected'
 
 
   // 👇 ==================== TASK 3 START ==================== 👇
