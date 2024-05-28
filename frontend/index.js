@@ -12,36 +12,40 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   // ❗ Use the await keyword when using axios.
 
  
-  let mentors = [] // fix this
-  let learners = [] // fix this
-  async function fetchMentorList(url)
-  {
-   try{
-     const res = await axios.get(url)
-    mentors.push(res.data)
-    
-   }
-   catch(err)
-   {
-     console.log("You got the error",err)
-   }
+  let mentors = [];
+  let learners = [];
+  
+  async function fetchMentorList(url) {
+    try {
+      const res = await axios.get(url);
+      mentors = res.data; // Assuming the response has a 'mentors' property
+    } catch (err) {
+      console.log("You got the error", err);
+    }
   }
-  fetchMentorList("http://localhost:3003/api/mentors")
-  async function fetchLearnerList(url)
-  {
-   try{
-     const res = await axios.get(url)
-    learners.push(res.data)
-    
-   }
-   catch(err)
-   {
-     console.log("You got the error",err)
-   }
+  
+  async function fetchLearnerList(url) {
+    try {
+      const res = await axios.get(url);
+      learners = res.data; // Assuming the response has a 'learners' property
+    } catch (err) {
+      console.log("You got the error", err);
+    }
   }
-  fetchLearnerList("http://localhost:3003/api/learners")
-  console.log(mentors)
-  console.log(learners)
+  
+  async function fetchData() {
+    await fetchMentorList("http://localhost:3003/api/mentors");
+    await fetchLearnerList("http://localhost:3003/api/learners");
+  
+    console.log('Mentors:', mentors); // Logs the fetched mentors data
+    console.log('Learners:', learners); // Logs the fetched learners data
+  }
+  
+  // Ensure fetchData is called to start the fetching process
+  fetchData();
+  
+
+
   // 👆 ==================== TASK 1 END ====================== 👆
 
   // 👇 ==================== TASK 2 START ==================== 👇
