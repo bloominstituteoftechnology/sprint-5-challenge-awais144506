@@ -1,5 +1,6 @@
 
 
+
 async function sprintChallenge5() { // Note the async keyword so you can use `await` inside sprintChallenge5
   // 👇 WORK ONLY BELOW THIS LINE 👇
   // 👇 WORK ONLY BELOW THIS LINE 👇
@@ -11,40 +12,16 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   // ❗ Use the variables `mentors` and `learners` to store the data.
   // ❗ Use the await keyword when using axios.
 
- 
+
   let mentors = [];
   let learners = [];
-  
-  async function fetchMentorList(url) {
-    try {
-      const res = await axios.get(url);
-      mentors = res.data; // Assuming the response has a 'mentors' property
-    } catch (err) {
-      console.log("You got the error", err);
-    }
-  }
 
-  
-  async function fetchLearnerList(url) {
-    try {
-      const res = await axios.get(url);
-      learners = res.data; // Assuming the response has a 'learners' property
-    } catch (err) {
-      console.log("You got the error", err);
-    }
-  }
-  
-  async function fetchData() {
-    await fetchMentorList("http://localhost:3003/api/mentors");
-    await fetchLearnerList("http://localhost:3003/api/learners");
-  
-    console.log('Mentors:', mentors); // Logs the fetched mentors data
-    console.log('Learners:', learners); // Logs the fetched learners data
-  }
-  
-  // Ensure fetchData is called to start the fetching process
-  fetchData();
-  
+  let mentorList = await axios.get("http://localhost:3003/api/mentors")
+  mentors = mentorList.data
+
+  let learnerList = await axios.get("http://localhost:3003/api/learners")
+  learners = learnerList.data
+
 
 
   // 👆 ==================== TASK 1 END ====================== 👆
@@ -63,6 +40,24 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
   //     "Grace Hopper"
   //   ]`
   // }
+  function getMentorNames(mentorIds) {
+    return mentorIds.map(id => {
+      const mentor = mentors.find(mentor => mentor.id === id);
+      return `${mentor.firstName} ${mentor.lastName}`;
+    })
+  }
+
+  // Combine learners and replace mentor IDs with mentor names
+  const combinedLearners = learners.map(learner => {
+    const mentorNames = getMentorNames(learner.mentors);
+    return {
+      id: learner.id,
+      fullName: learner.fullName,
+      email: learner.email,
+      mentors: mentorNames
+    };
+  });
+
 
   // 👆 ==================== TASK 2 END ====================== 👆
 
@@ -73,7 +68,7 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
 
   // 👇 ==================== TASK 3 START ==================== 👇
 
-  for (let learner of learners) { // looping over each learner object
+  for (let learner of combinedLearners) { // looping over each learner object
 
     // 🧠 Flesh out the elements that describe each learner
     // ❗ Give the elements below their (initial) classes, textContent and proper nesting.
@@ -87,8 +82,24 @@ async function sprintChallenge5() { // Note the async keyword so you can use `aw
     const email = document.createElement('div')
     const mentorsHeading = document.createElement('h4')
     const mentorsList = document.createElement('ul')
-
+    
     // 👆 ==================== TASK 3 END ====================== 👆
+    card.classList.add("card")
+    mentorsHeading.classList.add("closed")
+    heading.textContent = learner.fullName
+    email.textContent = learner.email
+    mentorsHeading.textContent = "Mentors"
+  
+    card.append(heading)
+    card.append(email)
+    card.append(mentorsHeading)
+    
+    console.log(learner.mentors)
+    learner.mentors.forEach(name =>{
+      const mentorListNames = document.createElement("li")
+      mentorListNames.textContent = name
+      mentorsList.append(mentorListNames)
+    })
 
     // 👆 WORK ONLY ABOVE THIS LINE 👆
     // 👆 WORK ONLY ABOVE THIS LINE 👆
